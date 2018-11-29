@@ -31,8 +31,34 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
-	}
+		//char[] word= new char[phrase.length()];
+	    String thing = " ";    
+		if (phrase.length() == 0) { 
+	            return phrase; 
+	        }
+	        System.out.print(Character.toUpperCase( 
+	            phrase.charAt(0))); //typecasting the first character in the string
+	        						// to a character and making uppercase
+	        						//The first char is the beginning of the word so its 
+	        						//the first in our acronym
+	        for (int i = 1; i < phrase.length() - 1; i++)//starting at the second letter since we already snagged the first
+	        											
+	        {
+	            if (phrase.charAt(i) == ' ')//if the letter in the word is a blank (thus not a letter)
+	            							//were probably done with one of the words so grab the next letter instead
+	            							//and make that uppercase please and thanks.
+	                System.out.print(Character.toUpperCase( 
+	                                        phrase.charAt(i + 1)));
+	        }
+	        return thing;	//made this empty string because I promised to give it back a string
+	        				//and it will be mad if I don't give it one, but it will
+	        				//repeat phrase if I try to return that so HAHA outplayed!
+	    } 
+		
+		
+	
+		
+	
 
 	/**
 	 * 3. Determine if a triangle is equilateral, isosceles, or scalene. An
@@ -84,8 +110,8 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			
+			return sideOne==sideTwo==sideThree;
 		}
 
 		public boolean isIsosceles() {
