@@ -40,31 +40,18 @@ public class EvaluationService {
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
 		//char[] word= new char[phrase.length()];
-	    char thing;
-	    char thing2;
-		if (phrase.length() == 0) { 
-	            return phrase; 
-	        }
-			
-	        thing=(Character.toUpperCase( 
-	            phrase.charAt(0)));
-	        //Character.toString(thing)					//typecasting the first character in the string
-	        						// to a character and making uppercase
-	        						//The first char is the beginning of the word so its 
-	        						//the first in our acronym
-	        for (int i = 1; i < phrase.length() - 1; i++)//starting at the second letter since we already snagged the first
-	        											
-	        {
-	            if (phrase.charAt(i) == ' ')//if the letter in the word is a blank (thus not a letter)
-	            							//were probably done with one of the words so grab the next letter instead
-	            							//and make that uppercase please and thanks.
-	                thing2=(Character.toUpperCase( 
-	                                        phrase.charAt(i + 1)));
-	        }
-	        return null;	//made this empty string because I promised to give it back a string
-	        				//and it will be mad if I don't give it one, but it will
-	        				//repeat phrase if I try to return that so HAHA outplayed!
-	    } 
+		String phrase1=phrase.substring(0, 1);
+		int posthing = phrase.indexOf(' ');
+		while (posthing != -1) {
+			if (phrase.charAt(posthing + 1) != ' ') { 
+               
+				phrase1 += phrase.substring(posthing + 1, posthing + 2); 
+            }
+            posthing = phrase.indexOf(' ', posthing + 1); //Finds the next space sign           
+        } 
+	return phrase1;	
+	}
+	    
 		
 		
 	
@@ -174,7 +161,8 @@ public class EvaluationService {
 	public int getScrabbleScore(String string) {
 		int score = 0;
 		String word;
-		// TODO Write an implementation for this method declaration
+		
+		
 		for (int i=0; i<string.length();i++) {// goes into the string converts everything to lowercase
 			word=string.toLowerCase();		// if uses charAt to get the character at the index i
 			char numholder= word.charAt(i);	// when it matches a case the value is assigned to score and totaled
@@ -298,10 +286,18 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		String word;
-		word=string.replaceAll("\\D", ""); //just replaces all instances of not a digit
-		return word;
-	}
+		string=string.replaceAll("\\D", ""); //just replaces all instances of not a digit
+		
+		if (string.length() > 11){
+			throw new IllegalArgumentException();
+		}
+		
+		
+		return string;
+		}
+	
+		
+	
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
@@ -454,7 +450,6 @@ public class EvaluationService {
 		int number; 
 		int temp; 
 		int total = 0;
-		
         number = input;
         while (number != 0)
         {
@@ -536,20 +531,20 @@ public class EvaluationService {
 			newThing+= thingaz.substring(0, key);
 			System.out.println(newThing);
 			for (int i=0; i<string.length();i++) {
-				if (!Character.isLetter(string.charAt(i))) {
-					thing+=string.charAt(i);
+				if (!Character.isLetter(string.charAt(i))) { //if the character at the position in string is not a letter
+					thing+=string.charAt(i);				//then add that to thing
 				}
 				else
 				{
-					if(Character.isUpperCase(string.charAt(i))) {
+					if(Character.isUpperCase(string.charAt(i))) {	// if uppercase make it lower instead
 						char letter = Character.toLowerCase(string.charAt(i));
 						int index;
 						index = thingaz.indexOf(letter);
-						letter = Character.toUpperCase(newThing.charAt(index));
-						thing += letter;
+						letter = Character.toUpperCase(newThing.charAt(index));	// gives the index of that latter
+						thing += letter;	//add the letter to thing
 					}else {
-					thing+= newThing.charAt(thingaz.indexOf(string.charAt(i)));
-					}
+					thing+= newThing.charAt(thingaz.indexOf(string.charAt(i))); //adds gets the char in string, then index of that char, then
+					}		//then the char at that position in the index and assigns to thing
 				}
 			}
 			return thing;
@@ -570,9 +565,32 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
-	}
+		int num = 1;
+		int n;
+		int count = 0;
+		if (i == 0) {
+			throw new IllegalArgumentException();
+		}
+		 while (count < i)// while count is less than the input increase num by 1
+		    {
+		        num = num+1;
+		        for ( n = 2; n <= num; n++) // we know 0 and 1 are not prime numbers so no need to start there
+		        {
+		            if (num % n == 0) // if num divided by our iterator is 0 we know it can't be divided further break
+		            {
+		                break;
+		            }
+		            
+		        }
+		        if (n == num) //if the two are equal increase the size of count to keep it going
+		        {
+		            count = count+1;
+		        }
+		    }
+		return num;   
+		}
+		
+	
 
 	/**
 	 * 13 & 14. Create an implementation of the atbash cipher, an ancient encryption
