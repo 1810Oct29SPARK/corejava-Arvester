@@ -418,44 +418,28 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		for (int i=0; i<string.length();i++) {
-			string=string.trim();
-			char a = string.charAt(0);
-			String thing = String.valueOf(a);
-			int last = string.lastIndexOf(string);
-			switch (a)
-			{
-			case 'a':
-				string.concat("ay");
-				break;
-			case 'e':
-				string.concat("ay");
-				break;
-			case 'i':
-				string.concat("ay");
-				break;
-			case 'o':
-				string.concat("ay");
-				break;
-			case 'u':
-				string.concat("ay");
-				break;
-			}
-			for (last = last;last<string.length();last++)
-			{
-				string.concat(thing);
-				string.concat("ay");
+		string=string.trim();
+		int i;
+		char a;
+		for (i=0; i<string.length();i++) {
+			a= string.charAt(i);
+			if  (a == 'a'||a == 'e'||a == 'i' || a == 'o' || a == 'u' ){
+			break;
 			}
 			
 		}
-		return string;
+		
+		String thingl = string.substring(0,i);
+		String thingr = string.substring(i);
+		String lastThing = thingr + thingl + "ay";
+		return lastThing;
 	}
 
 	/**
 	 * 9. An Armstrong number is a number that is the sum of its own digits each
 	 * raised to the power of the number of digits.
 	 * 
-	 * For example:
+	 * For example: 
 	 * 
 	 * 9 is an Armstrong number, because 9 = 9^1 = 9 10 is not an Armstrong number,
 	 * because 10 != 1^2 + 0^2 = 2 153 is an Armstrong number, because: 153 = 1^3 +
@@ -467,9 +451,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
-	}
+		int number; 
+		int temp; 
+		int total = 0;
+		
+        number = input;
+        while (number != 0)
+        {
+            temp = number % 10;
+            total = total + temp*temp*temp*temp;
+            number /= 10;
+        }
+
+        if(total == input) {
+            return true;
+        }
+        else
+            return false;
+    }
+	   
+	
 
 	/**
 	 * 10. Compute the prime factors of a given natural number.
@@ -482,10 +483,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		long n = l;
+        List<Long> factthing = new ArrayList<Long>();
+        for (long i = 2; i <= n; i++) {
+            while (n % i == 0) {
+                factthing.add(i);
+                n /= i;
+            }
+		
 	}
-
+        return factthing;
+	}
 	/**
 	 * 11. Create an implementation of the rotational cipher, also sometimes called
 	 * the Caesar cipher.
@@ -521,8 +529,30 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String thing = "";
+			String thingaz = "abcdefghijklmnopqrstuvwxyz";
+			String newThing = "";
+			newThing+= thingaz.substring(key);
+			newThing+= thingaz.substring(0, key);
+			System.out.println(newThing);
+			for (int i=0; i<string.length();i++) {
+				if (!Character.isLetter(string.charAt(i))) {
+					thing+=string.charAt(i);
+				}
+				else
+				{
+					if(Character.isUpperCase(string.charAt(i))) {
+						char letter = Character.toLowerCase(string.charAt(i));
+						int index;
+						index = thingaz.indexOf(letter);
+						letter = Character.toUpperCase(newThing.charAt(index));
+						thing += letter;
+					}else {
+					thing+= newThing.charAt(thingaz.indexOf(string.charAt(i)));
+					}
+				}
+			}
+			return thing;
 		}
 
 	}
@@ -768,7 +798,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
+		String thing = string;
+		double num;
+		thing = string.replaceAll("\\D", "");
+		for (int i = 0; i<string.length();i++)
+		num = Double.parseDouble(thing);
+		
 		return 0;
 	}
 
