@@ -1,8 +1,16 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EvaluationService {
 
@@ -32,12 +40,15 @@ public class EvaluationService {
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
 		//char[] word= new char[phrase.length()];
-	    String thing = " ";    
+	    char thing;
+	    char thing2;
 		if (phrase.length() == 0) { 
 	            return phrase; 
 	        }
-	        System.out.print(Character.toUpperCase( 
-	            phrase.charAt(0))); //typecasting the first character in the string
+			
+	        thing=(Character.toUpperCase( 
+	            phrase.charAt(0)));
+	        //Character.toString(thing)					//typecasting the first character in the string
 	        						// to a character and making uppercase
 	        						//The first char is the beginning of the word so its 
 	        						//the first in our acronym
@@ -47,10 +58,10 @@ public class EvaluationService {
 	            if (phrase.charAt(i) == ' ')//if the letter in the word is a blank (thus not a letter)
 	            							//were probably done with one of the words so grab the next letter instead
 	            							//and make that uppercase please and thanks.
-	                System.out.print(Character.toUpperCase( 
+	                thing2=(Character.toUpperCase( 
 	                                        phrase.charAt(i + 1)));
 	        }
-	        return thing;	//made this empty string because I promised to give it back a string
+	        return null;	//made this empty string because I promised to give it back a string
 	        				//and it will be mad if I don't give it one, but it will
 	        				//repeat phrase if I try to return that so HAHA outplayed!
 	    } 
@@ -73,20 +84,34 @@ public class EvaluationService {
 		private double sideOne;
 		private double sideTwo;
 		private double sideThree;
-
+		public String side1 = String.valueOf(sideOne); //stores value of the double in each
+		public String side2 = String.valueOf(sideTwo);
+		public String side3 = String.valueOf(sideThree);
+	
 		public Triangle() {
 			super();
+			
 		}
 
 		public Triangle(double sideOne, double sideTwo, double sideThree) {
-			this();
+			this();									//assigns values from object version of sideone to string
 			this.sideOne = sideOne;
+			side1 =  String.valueOf(this.sideOne);
 			this.sideTwo = sideTwo;
+			side2 = String.valueOf(this.sideTwo);
 			this.sideThree = sideThree;
+			side3 = String.valueOf(this.sideThree);
+			//System.out.println(sideOne);
 		}
 
 		public double getSideOne() {
 			return sideOne;
+		}
+		
+		public void printThing() {
+			System.out.println(side1);
+			System.out.println(side2);
+			System.out.println(side3);
 		}
 
 		public void setSideOne(double sideOne) {
@@ -109,23 +134,28 @@ public class EvaluationService {
 			this.sideThree = sideThree;
 		}
 
-		public boolean isEquilateral() {
+		public boolean isEquilateral() {	//if all sides are equal then this is equilateral
+			if(side1.equals(side2) && side1.equals(side3)) {
+				return true;
+			}
+			return false;
 			
-			return sideOne==sideTwo==sideThree;
 		}
 
-		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+		public boolean isIsosceles() { //if atleast 2 sides are equal then this is Isosceles
+			if(side1.equals(side2) && side2!=side3 || side2.equals(side3) && (side1!=(side3))) {
+			return true;
+			}
 			return false;
 		}
 
-		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+		public boolean isScalene() {		//if no sides are equal this is Scalene
+		if (side1.equals(side2) || side1.equals(side3) || side3.equals(side2)) {
 			return false;
 		}
-
+		return true;
 	}
-
+	}
 	/**
 	 * 4. Given a word, compute the scrabble score for that word.
 	 * 
@@ -142,8 +172,97 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
+		int score = 0;
+		String word;
 		// TODO Write an implementation for this method declaration
-		return 0;
+		for (int i=0; i<string.length();i++) {// goes into the string converts everything to lowercase
+			word=string.toLowerCase();		// if uses charAt to get the character at the index i
+			char numholder= word.charAt(i);	// when it matches a case the value is assigned to score and totaled
+			switch (numholder)				//break statements prevent falling through and assigning everything after a letter
+			{
+			case 'a':
+				score+=1;
+				break;
+			case 'e':
+				score+=1;
+				break;
+			case 'i':
+				score+=1;
+				break;
+			case 'o':
+				score+=1;
+				break;
+			case 'u':
+				score+=1;
+				break;
+			case 'l':
+				score+=1;
+				break;
+			case 'n':
+				score+=1;
+				break;
+			case 'r':
+				score+=1;
+				break;
+			case 's':
+				score+=1;
+				break;
+			case 't':
+				score+=1;
+				break;
+			case 'd':
+				score+=2;
+				break;
+			case 'g':
+				score+=2;
+				break;
+			case 'b':
+				score+=3;
+				break;
+			case 'c':
+				score+=3;
+				break;
+			case 'm':
+				score+=3;
+				break;
+			case 'p':
+				score+=3;
+				break;
+			case 'f':
+				score+=4;
+				break;
+			case 'h':
+				score+=4;
+				break;
+			case 'v':
+				score+=4;
+				break;
+			case 'w':
+				score+=4;
+				break;
+			case 'y':
+				score+=4;
+				break;
+			case 'k':
+				score+=5;
+				break;
+			case 'j':
+				score+=8;
+				break;
+			case 'x':
+				score+=8;
+				break;
+			case 'q':
+			score+=10;
+			break;
+			case 'z':
+			score+=10;
+			break;
+		}
+		
+		
+	}
+		return score;
 	}
 
 	/**
@@ -179,7 +298,9 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String word;
+		word=string.replaceAll("\\D", ""); //just replaces all instances of not a digit
+		return word;
 	}
 
 	/**
@@ -192,9 +313,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
-	}
+		HashMap<String, Integer> hmap = new HashMap<>();
+		String[] words;
+		string=string.replaceAll("\n","");
+		words=string.split("([ ,])");
+		for (int i=0; i<words.length; i++) {
+			Integer c = hmap.get(words[i]);
+			 if (hmap.get(words[i]) == null) 
+			 {
+			hmap.put(words[i], 1); 
+			 }
+			 else
+			 {
+					hmap.put(words[i], ++c); 
+			 }
+			  
+		}
+		return hmap;
+		
+		}
 
 	/**
 	 * 7. Implement a binary search algorithm.
@@ -233,11 +370,18 @@ public class EvaluationService {
 	 */
 	static class BinarySearch<T> {
 		private List<T> sortedList;
-
+		
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
-		}
+			 List<T> list = this.getSortedList();
+			  
+			   ArrayList<T> arraylist=new ArrayList<T>(list);
+			   System.out.println(arraylist);
+
+			   int index = Collections.binarySearch(list, t,null);
+			   System.out.println("search for "+ t);
+			   System.out.println("this is what we found in the index "+index);			  
+			return index;		
+			}
 
 		public BinarySearch(List<T> sortedList) {
 			super();
@@ -251,8 +395,10 @@ public class EvaluationService {
 		public void setSortedList(List<T> sortedList) {
 			this.sortedList = sortedList;
 		}
+	}	 
+	
 
-	}
+	
 
 	/**
 	 * 8. Implement a program that translates from English to Pig Latin.
@@ -272,8 +418,37 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		for (int i=0; i<string.length();i++) {
+			string=string.trim();
+			char a = string.charAt(0);
+			String thing = String.valueOf(a);
+			int last = string.lastIndexOf(string);
+			switch (a)
+			{
+			case 'a':
+				string.concat("ay");
+				break;
+			case 'e':
+				string.concat("ay");
+				break;
+			case 'i':
+				string.concat("ay");
+				break;
+			case 'o':
+				string.concat("ay");
+				break;
+			case 'u':
+				string.concat("ay");
+				break;
+			}
+			for (last = last;last<string.length();last++)
+			{
+				string.concat(thing);
+				string.concat("ay");
+			}
+			
+		}
+		return string;
 	}
 
 	/**
@@ -441,9 +616,39 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
-	}
+        string = string.replaceAll("-","");
+        String reg = "[^X0123456789]";
+        Pattern ISBN = Pattern.compile(reg);
+        Matcher Match = ISBN.matcher(string);
+        if (Match.find()) {
+            return false;
+        }
+        else {
+            if (string.length()!=10) {
+                return false;
+            }
+            else {
+                int eleven = 0;
+                for (int i = 0;i<10;i++) {
+                    if (string.charAt(i)!='X') {
+                        int thing = Character.getNumericValue(string.charAt(i));
+                        eleven = eleven+((10-i)*thing);
+                    }
+                    else {
+                        eleven = eleven+((10-i)*10);
+                    }
+                }
+                if (eleven%11==0) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+    }
+	
+
 
 	/**
 	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
